@@ -13,6 +13,15 @@
     <section class="container">
         <h1>프롬프트를 만들자!</h1>
         <p>만들어보자!!!</p>
+        <form method="post"
+              th:action="@{/}"
+              th:object="${promptForm}">
+            <div class="mb-3">
+                <label for="inputText" class="form-label">텍스트 :</label>
+                <input type="text" class="form-control" id="inputText" th:field="*{text}">
+            </div>
+            <button type="submit" class="btn btn-primary">변환</button>
+        </form>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
 </body>
