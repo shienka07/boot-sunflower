@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.example.bootsunflower.dto.GeminiRequestDTO;
+import org.example.bootsunflower.dto.GeminiResponseDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,8 @@ public class GeminiService {
         if (response.statusCode() != 200) {
             throw new IOException(response.body());
         }
-        return response.body();
+//        return response.body();
+        GeminiResponseDTO responseDTO = objectMapper.readValue(response.body(), GeminiResponseDTO.class);
+        return responseDTO.candidates().get(0).content().parts().get(0).text();
     }
 }
