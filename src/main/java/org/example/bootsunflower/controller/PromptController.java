@@ -2,6 +2,7 @@ package org.example.bootsunflower.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.bootsunflower.dto.PromptForm;
+import org.example.bootsunflower.entity.Prompt;
 import org.example.bootsunflower.service.GeminiService;
 import org.example.bootsunflower.service.PromptService;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,11 @@ public class PromptController {
     public String submit(PromptForm promptForm, Model model) {
         String result = geminiService.generate(promptForm.text());
         model.addAttribute("promptText", result);
+        Prompt data = promptService.savePrompt(
+                promptForm.text(),
+                result
+        );
+        model.addAttribute("promptData", data);
         return "index";
     }
 }
