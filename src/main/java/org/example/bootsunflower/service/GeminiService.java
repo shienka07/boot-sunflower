@@ -1,19 +1,13 @@
 package org.example.bootsunflower.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.genai.Client;
+import com.google.genai.types.Content;
+import com.google.genai.types.GenerateContentConfig;
+import com.google.genai.types.GenerateContentResponse;
+import com.google.genai.types.Part;
 import lombok.RequiredArgsConstructor;
-import org.example.bootsunflower.dto.GeminiRequestDTO;
-import org.example.bootsunflower.dto.GeminiResponseDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -21,22 +15,20 @@ public class GeminiService {
     @Value("${gemini.key}")
     private String geminiKey;
 
-    public String generate(String text) throws IOException, InterruptedException {
-        String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=%s".formatted(geminiKey);
-        GeminiRequestDTO dto = new GeminiRequestDTO(List.of(new GeminiRequestDTO.Content(
-                List.of(new GeminiRequestDTO.Part(text)))));
-        ObjectMapper objectMapper = new ObjectMapper();
-        HttpRequest request = HttpRequest.newBuilder(URI.create(url)).POST(
-                        HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(dto))
-                )
-                .header("Content-Type", "application/json")
-                .build();
-        HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-        if (response.statusCode() != 200) {
-            throw new IOException(response.body());
+    public String generate(String text) {
+        GenerateContentConfig config = GenerateContentConfig.builder()
+                .systemInstruction(
+                        Content.fromParts(
+                                Part.fromText("입력하는 것에 대해서 네가 5~7년차 대리직급의 직장인이라고 생각하고 해당 입장에서 잔소리를 해줘. 본인이 누군지는 굳이 언급하진 마. don't use any rich text or markdown ever.")
+                        )
+                ).build();
+        try (Client client = Client.builder().apiKey(geminiKey).build()) {
+            GenerateContentResponse response =
+                    client.models.generateContent(
+                            "gemini-2.0-flash",
+                            text,
+                            config);
+            return response.text();
         }
-//        return response.body();
-        GeminiResponseDTO responseDTO = objectMapper.readValue(response.body(), GeminiResponseDTO.class);
-        return responseDTO.candidates().get(0).content().parts().get(0).text();
     }
 }

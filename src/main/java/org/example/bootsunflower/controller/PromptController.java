@@ -24,7 +24,7 @@ public class PromptController {
     }
 
     @PostMapping
-    public String submit(PromptForm promptForm, Model model) throws IOException, InterruptedException {
+    public String submit(PromptForm promptForm, Model model) {
         String result = geminiService.generate(promptForm.text());
         model.addAttribute("promptText", result);
         return "index";
