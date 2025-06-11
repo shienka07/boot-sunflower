@@ -13,8 +13,8 @@ public class Prompt {
     @GeneratedValue(strategy = GenerationType.UUID)
     String id; // UUID
     @Column(nullable = false)
-    String originalText;
+    String question;
     @Column(nullable = false)
-    String editedText;
+    String answer;
     ZonedDateTime createdAt; // UTC
 }

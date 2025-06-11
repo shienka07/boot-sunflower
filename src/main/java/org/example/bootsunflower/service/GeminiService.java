@@ -19,7 +19,7 @@ public class GeminiService {
         GenerateContentConfig config = GenerateContentConfig.builder()
                 .systemInstruction(
                         Content.fromParts(
-                                Part.fromText("입력하는 것에 대해서 네가 5~7년차 대리직급의 직장인이라고 생각하고 해당 입장에서 잔소리를 해줘. 본인이 누군지는 굳이 언급하진 마. don't use any rich text or markdown ever.")
+                                Part.fromText("입력하는 것에 대해서 네가 5~7년차 대리직급의 직장인이라고 생각하고 해당 입장에서 400자 미만으로 잔소리를 해줘. 본인이 누군지는 굳이 언급하진 마. don't use any rich text or markdown ever.")
                         )
                 ).build();
         try (Client client = Client.builder().apiKey(geminiKey).build()) {

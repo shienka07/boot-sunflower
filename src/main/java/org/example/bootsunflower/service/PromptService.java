@@ -20,8 +20,8 @@ public class PromptService {
 
     public Prompt savePrompt(String question, String answer) {
         Prompt prompt = new Prompt();
-        prompt.setOriginalText(question);
-        prompt.setEditedText(answer);
+        prompt.setQuestion(question);
+        prompt.setAnswer(answer);
         prompt.setCreatedAt(ZonedDateTime.now(ZoneOffset.UTC));
         return promptRepository.save(prompt);
     }
