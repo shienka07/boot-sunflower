@@ -22,3 +22,8 @@ spring:
     password: ${DB_PASSWORD}
 gemini:
   key: ${GEMINI_KEY}
+springdoc:
+  swagger-ui:
+    enabled: false
+  api-docs:
+    enabled: false

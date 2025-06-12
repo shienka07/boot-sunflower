@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/prompt")
 @RequiredArgsConstructor
+@CrossOrigin
 public class PromptAPIController {
     private final PromptService promptService;
     private final GeminiService geminiService;
