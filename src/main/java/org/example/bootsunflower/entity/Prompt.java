@@ -12,9 +12,9 @@ public class Prompt {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String id; // UUID
-    @Column(nullable = false)
+    @Column(nullable = false, length = 1000)
     String question;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 1000)
     String answer;
     ZonedDateTime createdAt; // UTC
 }

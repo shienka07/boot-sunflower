@@ -1,5 +1,6 @@
 server:
   port: 8080 # 로컬에서 신경써야하는 이슈는? -> 포트 겹침
+  baseurl: ${BASEURL}
 spring:
   jpa:
     hibernate:
