@@ -5,10 +5,10 @@ spring:
   jpa:
     hibernate:
       # ddl-auto: create # 배포 시는 none 또는 validate 추천
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect # MySQL, MariaDB
+        dialect: org.hibernate.dialect.MySQLDialect # MySQL, MariaDB
         # dialect: org.hibernate.dialect.PostgreSQLDialect # PostgreSQL
         show_sql: true
         format_sql: true
